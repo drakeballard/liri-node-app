@@ -4,6 +4,7 @@ var keys = require('./keys.js');
 //creating dependencies
 var Twitter = require('twitter');
 var spotify = require('spotify');
+var request = require('request');
 var client = new Twitter(keys.twitterKeys);
 var fs = require('fs');
 //
@@ -23,7 +24,12 @@ function twitter(  ) {
 });
 }
 
+
+
 //spotify npm set up
+var getArtistNames = function(artist) {
+  return artist.name;
+}
 
 var getMeSpotify = function(songName) {
 
@@ -32,9 +38,39 @@ var getMeSpotify = function(songName) {
           console.log('Error occurred: ' + err);
           return;
       }
-      console.log(data.tracks.items[0]);
+      var songs = data.tracks.items
+      for(var i=0; i<songs.length; i++) {
+        console.log(i);
+        console.log('artist(s): ' + songs[i].artists.map(getArtistNames));
+        console.log('song name: ' + songs[i].name);
+        console.log('preview song: ' + songs[i].preview_url);
+        console.log('album: ' + songs[i].album.name);
+        console.log('=============================================');
+      }
   });
 }
+
+var getMeMovie = function(movieName) {
+
+request('http://www.omdbapi.com/?t=' + movieName + '&y=&plot=short&r=json', function(error, response, body) {
+
+  if (!error && response.statusCode == 200) {
+
+  var jsonData = JSON.parse(body);
+  console.log('Title: ' + jsonData.Title);
+  console.log('Year: ' + jsonData.Year);
+  console.log('Rated: ' + jsonData.Rated);
+  console.log('IMDB Rating: ' + jsonData.imdbRating);
+  console.log('Country: ' + jsonData.Country);
+  console.log('Language: ' + jsonData.Language);
+  console.log('Plot: ' + jsonData.Plot);
+  console.log('Actors: ' + jsonData.Actors);
+  console.log('Rotten Tomatoes Rating: ' + jsonData.tomatoRating);
+  console.log('Rotten Tomatoes URL: ' + jsonData.tomatoURL);
+  }
+});
+}
+
 //switch statements
 var pick = function(caseData, functionData) {
   switch(caseData) {
@@ -44,8 +80,11 @@ var pick = function(caseData, functionData) {
     case 'spotify-this-song':
       getMeSpotify(functionData);
       break;
+    case 'movie-this':
+      getMeMovie(functionData);
+      break;
     default:
-    console.log('LIRI DOES NOT KNOW HOW TO DO THAT');
+    console.log('LIRI DOES NOT KNOW HOW TO DO THIS');
 
   }
 }
