@@ -3,14 +3,14 @@ var keys = require('./keys.js');
 
 //creating dependencies
 var Twitter = require('twitter');
-var Spotify = require('spotify');
+var spotify = require('spotify');
 var client = new Twitter(keys.twitterKeys);
 var fs = require('fs');
 //
-// console.log(keys.twitterKeys);
 
 
-function twitter(  ){
+
+function twitter(  ) {
   var params = {screen_name: 'drakeba11', count: 20, trim_user: true};
   client.get('statuses/user_timeline', params, function(error, tweets, response) {
     if (!error) {
@@ -22,6 +22,17 @@ function twitter(  ){
 
 });
 }
+
+//spotify npm set up
+
+spotify.search({ type: 'track', query: 'dancing in the moonlight' }, function(err, data) {
+    if (err) {
+        console.log('Error occurred: ' + err);
+        return;
+    }
+    console.log(data);
+});
+
 
 var pick = function(caseData, functionData) {
   switch(caseData) {
