@@ -25,19 +25,24 @@ function twitter(  ) {
 
 //spotify npm set up
 
-spotify.search({ type: 'track', query: 'dancing in the moonlight' }, function(err, data) {
-    if (err) {
-        console.log('Error occurred: ' + err);
-        return;
-    }
-    console.log(data);
-});
+var getMeSpotify = function(songName) {
 
-
+  spotify.search({ type: 'track', query: songName }, function(err, data) {
+      if (err) {
+          console.log('Error occurred: ' + err);
+          return;
+      }
+      console.log(data.tracks.items[0]);
+  });
+}
+//switch statements
 var pick = function(caseData, functionData) {
   switch(caseData) {
     case 'my-tweets':
       twitter( );
+      break;
+    case 'spotify-this-song':
+      getMeSpotify(functionData);
       break;
     default:
     console.log('LIRI DOES NOT KNOW HOW TO DO THAT');
