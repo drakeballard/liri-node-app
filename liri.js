@@ -22,9 +22,8 @@ function twitter() {
             for (var i = 0; i < tweets.length; i++) {
                 console.log(tweets[i].created_at + " : " + tweets[i].text);
                 console.log("=============================================");
-            }
+          }
         }
-
     });
 }
 
@@ -75,13 +74,23 @@ var getMeMovie = function(movieName) {
         }
     });
 }
+var doWhatItSays = function() {
 
-fs.readFile('random.txt', 'utf8', function(err, data) => {
-  if (err) throw err;
-  console.log(data);
-});
+        fs.readFile('random.txt', 'utf8', function(err, data) {
+            if (err) throw err;
 
-//switch statements
+            var dataArr = data.split(',');
+
+            if (dataArr.length == 2) {
+                pick(dataArr[0], dataArr[1]);
+            } else if (dataArr.length == 1) {
+                pick(dataArr[0]);
+            }
+
+
+        });
+    }
+    //switch statements
 var pick = function(caseData, functionData) {
     switch (caseData) {
         case 'my-tweets':
@@ -93,8 +102,11 @@ var pick = function(caseData, functionData) {
         case 'movie-this':
             getMeMovie(functionData);
             break;
+        case 'do- what-it-says':
+            doWhatItSays();
+          break;
         default:
-            console.log('LIRI DOES NOT KNOW HOW TO DO THIS');
+        console.log('LIRI DOES NOT KNOW HOW TO DO THIS');
 
     }
 }
@@ -104,7 +116,3 @@ var runThis = function(argOne, argTwo) {
 };
 
 runThis(process.argv[2], process.argv[3]);
-
-// if(process.argv[2] == "my-tweets") {
-//   twitter();
-// };
