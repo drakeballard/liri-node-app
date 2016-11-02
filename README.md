@@ -6,13 +6,13 @@ When installing the application, please ensure to install the JSON Packages.
 
 The following commands can be used to make this application operate:
 
-  - node liri.js **my-tweets**
+  * node liri.js **my-tweets**
 
-  - node liri.js **spotify-this-song** <title>
+  * node liri.js **spotify-this-song** "title"
 
-  - node liri.js **movie this** <'movie title'>
+  * node liri.js **movie this** 'movie title"
 
-  - node liri.js **do-what-it-says**
+  * node liri.js **do-what-it-says**
 
 Please reach out if you have any questions!
 
