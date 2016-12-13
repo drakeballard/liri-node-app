@@ -10,22 +10,24 @@ var fs = require('fs');
 //
 
 
+// twitter set up
+var getMyTweets = function() {
 
-function twitter() {
-    var params = {
-        screen_name: 'drakeba11',
-        count: 20,
-        trim_user: true
-    };
-    client.get('statuses/user_timeline', params, function(error, tweets, response) {
-        if (!error) {
-            for (var i = 0; i < tweets.length; i++) {
-                console.log(tweets[i].created_at + " : " + tweets[i].text);
-                console.log("=============================================");
-            }
-        }
+var Twitter = require('twitter');
 
-    });
+var client = new Twitter(keys.twitterKeys);
+
+var params = {screen_name: 'drakeba11'};
+client.get('statuses/user_timeline', params, function(error, tweets, response) {
+  if (!error) {
+    // console.log(tweets);
+  for(var i=0; i<tweets.length; i++) {
+    console.log(tweets[i].created_at);
+    console.log(' ');
+    console.log(tweets[i].text);
+  }
+  }
+});
 }
 
 //spotify npm set up
@@ -55,6 +57,7 @@ var getMeSpotify = function(songName) {
     });
 }
 
+// movie set up
 var getMeMovie = function(movieName) {
 
     request('http://www.omdbapi.com/?t=' + movieName + '&y=&plot=short&r=json', function(error, response, body) {
@@ -91,11 +94,12 @@ var doWhatItSays = function() {
 
         });
     }
-    //switch statements
+
+//switch statements
 var pick = function(caseData, functionData) {
     switch (caseData) {
         case 'my-tweets':
-            twitter();
+            getMyTweets();
             break;
         case 'spotify-this-song':
             getMeSpotify(functionData);
